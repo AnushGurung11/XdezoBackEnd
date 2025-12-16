@@ -1,7 +1,8 @@
 import express from 'express'
 import dotenv from "dotenv"
 import mongoose from 'mongoose';
-import {recipieRouters,authRoutes} from './Routes/recipieRoutes.js'
+import recipieRoutes from './Routes/recipieRoutes.js'
+import authRoutes from './Routes/authRoutes.js'
 
 // Using the dotenv and invoking the config 
 dotenv.config(); 
@@ -27,7 +28,7 @@ app.listen(port, ()=> {
 })
 
 
-app.use("/api/recipie",recipieRouters); 
+app.use("/api/recipie",recipieRoutes); 
 app.use("/api/auth",authRoutes); 
 
 mongoose
