@@ -9,7 +9,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: ture,
+      trim: true,
     },
 
     username: {
@@ -27,7 +27,7 @@ const userSchema = new Schema(
       type: String,
     },
   },
-  { timestamps: ture }
+  { timestamps: true }
 );
 
 export default mongoose.model("User", userSchema);
