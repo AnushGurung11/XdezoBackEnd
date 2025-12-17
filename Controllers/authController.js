@@ -66,7 +66,7 @@ export const loginUser = async (req, res) => {
         avatar: user.avatar,
         isAdmin: false,
       },
-      process.env.JWT_SECRET_KEY,
+      process.env.JWT_SECRET,
       { expiresIn: age }
     );
 
@@ -92,6 +92,10 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ msg: "Internal server error" });
     console.error(error);
   }
+};
+
+export const logoutUser = (req, res) => {
+  res.clearCookie("token").status(200).json({ msg: "Logged out successfully" });
 };
 
 export default registerUser;

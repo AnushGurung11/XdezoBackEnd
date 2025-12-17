@@ -3,12 +3,14 @@ import dotenv from "dotenv"
 import mongoose from 'mongoose';
 import recipieRoutes from './Routes/recipieRoutes.js'
 import authRoutes from './Routes/authRoutes.js'
+import cookieParser from 'cookie-parser';
 
 // Using the dotenv and invoking the config 
 dotenv.config(); 
 
 const app = express();
 app.use(express.json());  
+app.use(cookieParser());
 
 // This is for sending the Normal response. 
 app.get('/', (req,res)=>{
