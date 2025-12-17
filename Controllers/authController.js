@@ -39,4 +39,59 @@ const registerUser = async (req, res) => {
   }
 };
 
+// Login user
+export const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    // Check if user exists
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(401).json({ msg: "Invalid credentials" });
+    }
+
+    // Check if the user's password is correct
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ msg: "Invalid credentials" });
+    }
+
+    // Generate JWT token
+    const age = 1000 * 60 * 60 * 24 * 7; // 1 week
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        username: user.username,
+        avatar: user.avatar,
+        isAdmin: false,
+      },
+      process.env.JWT_SECRET_KEY,
+      { expiresIn: age }
+    );
+
+    // Create user info object
+    const userInfo = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      avatar: user.avatar, // This will be null if no avatar
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        // secure: true, // uncomment in production with HTTPS
+        maxAge: age,
+      })
+      .status(200)
+      .json(userInfo);
+  } catch (error) {
+    res.status(500).json({ msg: "Internal server error" });
+    console.error(error);
+  }
+};
+
 export default registerUser;
