@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import recipieRoutes from './Routes/recipieRoutes.js'
 import authRoutes from './Routes/authRoutes.js'
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 // Using the dotenv and invoking the config 
 dotenv.config(); 
@@ -11,6 +12,10 @@ dotenv.config();
 const app = express();
 app.use(express.json());  
 app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+}));
 
 // This is for sending the Normal response. 
 app.get('/', (req,res)=>{
