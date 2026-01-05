@@ -9,7 +9,7 @@ export const verifyToken = async (req, res, next) => {
       .json({ message: "Access denied. Not Authenticated." });
   }
 
-  jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
+  jwt.verify(token, process.env.JWT_SECRET, async (err, payload) => {
     if (err) {
       return res.status(403).json({ message: "Invalid token" });
     }
