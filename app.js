@@ -5,6 +5,7 @@ import recipieRoutes from './Routes/recipieRoutes.js'
 import authRoutes from './Routes/authRoutes.js'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import userRoutes from './Routes/userRoutes.js'
 
 // Using the dotenv and invoking the config 
 dotenv.config(); 
@@ -37,6 +38,8 @@ app.listen(port, ()=> {
 
 app.use("/api/recipie",recipieRoutes); 
 app.use("/api/auth",authRoutes); 
+app.use("/api/user",userRoutes); 
+
 
 mongoose
 .connect(process.env.MONGO_URL)
